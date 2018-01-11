@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            //setting arrays + variables
+
+            string userinputX;
+            string[,] grid = new string[10, 10];
+            string[,] ships = new string[10, 10];
+
+            Console.ForegroundColor = ConsoleColor.White; //changes text colour to white
+
+            //user interface
+
+            Console.WriteLine("BattleShips!");
+
+            Random rnd = new Random();
+            int Xcoord = rnd.Next(0, 10);
+            int Ycoord = rnd.Next(0, 10);
+
+            //GRID CODE
+
+            for (int x = 0; x <= 9; x++)
+            {
+
+                Console.WriteLine("");
+
+                if (x == 0)
+                {
+                    Console.WriteLine("  A B C D E F G H I J");
+                }
+
+                for (int y = 0; y <= 9; y++)
+                {
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                    if (y == 0)
+                    {
+                        Console.Write(x);
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.Blue;
+
+                    grid[y, x] = "\u25A0";
+
+                    if (x == Xcoord && y == Ycoord )
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                    }
+                    
+                    Console.Write(" " + grid[y, x]);
+
+                } 
+
+            }
+
+            //user interface
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(Environment.NewLine + "Enter X Co-ordinate from 0-9");
+            userinputX = Console.ReadLine();
+
+            Console.Read();
+
+        }
+    }
+}
