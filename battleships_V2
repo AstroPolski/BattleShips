@@ -1,0 +1,99 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            //setting arrays + variables
+
+            string userinputX;
+            string userinputY;
+            string[,] grid = new string[10, 10];
+            string[,] ships = new string[10, 10];
+            int[] ship_coordX = new int[5];
+            int[] ship_coordY = new int[5];
+            Boolean ship = false;
+
+            Console.ForegroundColor = ConsoleColor.White; //changes text colour to white
+
+            //user interface
+
+            Console.WriteLine("BattleShips!");
+
+            //setting random number placements        
+
+            Random r = new Random();
+
+            for (int i = 0; i <= 4; i++)
+            {
+                ship_coordX[i] = r.Next(0, 10);
+
+                ship_coordY[i] = r.Next(0, 10);
+            }
+
+            //GRID CODE
+
+            for (int x = 0; x <= 9; x++)
+            {
+
+                Console.WriteLine("");
+
+                if (x == 0)
+                {
+                    Console.WriteLine("  A B C D E F G H I J");
+                }
+
+                for (int y = 0; y <= 9; y++)
+                {
+
+                    //makes the grids
+
+                    Console.ForegroundColor = ConsoleColor.White; //setting column and row labels to white
+                    if (y == 0)
+                    {
+                        Console.Write(x);
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.Blue; //setting the rest of the grid back to blue
+
+                    grid[y, x] = "\u25A0"; //adding a square shape to every grid location
+
+                    //codes the grid
+                                   
+                        if (x == ship_coordX[0] && y == ship_coordY[0] || x == ship_coordX[1] && y == ship_coordY[1] || x == ship_coordX[2] && y == ship_coordY[2] || x == ship_coordX[3] && y == ship_coordY[3] || x == ship_coordX[4] && y == ship_coordY[4])
+                        {
+                        ship = true;
+                        }
+                        if (ship == true)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        ship = false;
+                        }
+                    
+                        Console.Write(" " + grid[y, x]);
+                  
+                }
+
+            }
+
+            //user interface
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(Environment.NewLine + "Enter X Co-ordinate from A-J (a = 0, b = 1, c = 2...)");
+            userinputX = Console.ReadLine();
+            Console.WriteLine(Environment.NewLine + "Enter Y Co-ordinate from 0-9");
+            userinputY = Console.ReadLine();
+
+            Console.Read();
+
+        }
+
+    }
+}
