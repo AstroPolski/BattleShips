@@ -1,0 +1,123 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BattleShips
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[,] grid = new string[10, 10];
+            Random rndNum = new Random();
+            string[,] ship_coord = new string[10,10];
+            int Xcoord = 0;
+            int Ycoord = 0;
+            int count = 0;
+            int addShip = 0;
+            bool checkShip = false;
+
+            // SHIP GRID
+            for (int x = 0; x <= 9; x++) //nested for loop makes a 10x10  grid with values in each point
+            {
+                for (int y = 0; y <= 9; y++)
+                {
+                        ship_coord[x, y] = "water";
+                }
+            }
+
+            // SHIP PLACEMENT
+            for (int i = 0; i <= 4; i++) //5 boats
+            {
+                Xcoord = rndNum.Next(0, 10); //creates random number
+                Ycoord = rndNum.Next(0, 10); //both used to make a coordinate which is the origin of each boat
+                if (i == 0)
+                {
+                    count = 2;
+                }
+                else
+                {
+                    count = i + 1;
+                }
+                for (int a = 1; a <= count; a++) //runs 2,2,3,4,5 for each length of ship 
+                {
+                    if (ship_coord[Xcoord, Ycoord] == "ship") //only runs when there is already a ship in that array point
+                    {
+                        while (ship_coord[Xcoord, Ycoord] == "ship") //runs while there is a ship in that point, making sure no points will ever overlap
+                        {
+                            Xcoord = rndNum.Next(0, 10); //creates random number, 0 to 9
+                            Ycoord = rndNum.Next(0, 10); //both used to make a coordinate which is the origin of each boat
+                        }
+                    }
+                    addShip = rndNum.Next(0, 4); //creates random number, 0 to 3
+                    do
+                    {
+                        if (addShip == 0)
+                        {
+                            Xcoord = Xcoord + 1;
+                            if (ship_coord[Xcoord, Ycoord] == "ship")
+                            {
+                                addShip = rndNum.Next(1, 4);
+                            }
+                        }
+                        else if (addShip == 1)
+                        {
+                            Xcoord = Xcoord - 1;
+                            if (ship_coord[Xcoord, Ycoord] == "ship")
+                            {
+                                addShip = rndNum.Next(0, 4);
+                                while (addShip == 1)
+                                {
+                                    addShip = rndNum.Next(0, 4);
+                                }
+                            }
+                        }
+                        else if (addShip == 2)
+                        {
+                            Ycoord = Ycoord + 1;
+                            if (ship_coord[Xcoord, Ycoord] == "ship")
+                            {
+                                // complete this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            }
+                        }
+                        else if (addShip == 3)
+                        {
+                            Ycoord = Ycoord - 1;
+                        }
+                    } while (checkShip == false);
+                        ship_coord[Xcoord, Ycoord] = "ship"; //assigns a "ship" value to a point in the array
+                }
+                
+            }
+
+            // VISUAL GRID
+            Console.ForegroundColor = ConsoleColor.White; //sets font as white
+            for (int x = 0; x <= 9; x++) //first loop positions the y coordinate
+            {
+                Console.WriteLine(""); //spaces the arrays boxes out
+                if (x == 0) //only runs if its on the first row
+                { 
+                    Console.WriteLine("  0 1 2 3 4 5 6 7 8 9");
+                }
+                for (int y = 0; y <= 9; y++) //second loop positions the x coordinate 
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    if (y == 0)
+                    {
+                        Console.Write(x);
+                    }
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    grid[x, y] = "\u25A0"; //assigns each point in the array a white box (unicode)
+                    if (ship_coord[x, y] == "ship") //only runs if the point in the array is a ship
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green; 
+                    }
+                    Console.Write(" " + grid[x, y]);
+                }
+            }
+            Console.Read();
+        }
+    }
+}
